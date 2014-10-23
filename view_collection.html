@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FlowerHouse | View Collection</title>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+	</head>
+	<body>
+		<div>
+			<header>
+				<div id="top-bar"></div>
+				<div id="header-container">
+					<div id="logo"><img src="img/logo.png" />
+					</div>
+					<ul id="header-list" class="list-clean">
+						<li class="list-clear" id="home">
+							<a href="index.html">HOME</a>
+						</li>
+						<li class="list-clear" id="flower-collection">
+							<a href="page2.html">FLOWER COLLECTION</a>
+						</li>
+						<li class="list-clear" id="phone-image"><img src="img/phone.png" />
+						</li>
+						<li class="list-clear" id="phone-number">
+							<a href="view_collection.html">(949) 300 2565</a>
+						</li>
+					</ul>
+				</div>
+			</header>
+			<div id="frame">
+				<div id="slider-container">
+					<div id="image-text3">
+						<img src="img/left-arrow.png" id="next" />
+						<!--<p>
+						SHARE YOUR EMOTIONS
+						</p>-->
+						<img src="img/right-arrow.png" id="prev" />
+					</div>
+				</div>
+			</div>
+			<div id="slider-dots-container"></div>
+
+			<div id="#main-container-text3">
+				<!--<p>
+				We offer a wide range of flower arrangements fit for any occasion. We specialize in traditional, modern, and extravagant flower designs. Flower House guarantees the most beautiful, elegant, and fresh flower arrangements in town! Give us a call and out friendly customer service representative will be there to answer your questions and/or take your order.
+				</p>-->
+			</div>
+			<footer>
+				<p>
+					Copyright &copy; 2014 FlowerHouse. All rights reserved | 234 Terry Francois St.San Francisco, CA 94158, info@flowerhouse.com | Mon - Fri: 7am - 10pm, Sat - 8am -10pm
+				</p>
+			</footer>
+		</div>
+		<script>
+			var images = ["img/3/event1.png", "img/3/event2.png", "img/3/event3.png", "img/3/event4.png", "img/3/event5.png", "img/3/event6.png"];
+
+			// Array that holds images
+			var current_image_index = 0;
+			var slider_container;
+			var dots_container;
+
+			function prev_image_index() {
+				if (current_image_index < images.length - 1) {
+					return current_image_index + 1;
+				} else {
+					return 0;
+				}
+			}
+
+			function next_image_index() {
+				if (current_image_index > 0) {
+					return current_image_index - 1;
+				} else {
+					return images.length - 1;
+				}
+			}
+
+			$(function() {
+				slider_container = $('#slider-container');
+				dots_container = $('#slider-dots-container');
+
+				for (var i = 0; i < images.length; i++) {
+					var row = images[i];
+					var class_name = 'slider-img slider-off';
+					var dot_class_name = '';
+
+					if (i == 0) {
+						class_name = 'slider-img';
+						dot_class_name = 'dot-current';
+					}
+					var img = $('<img>').attr('src', row).addClass(class_name);
+
+					slider_container.append(img);
+
+					var dot = $('<div>').addClass('dot fa fa-circle').addClass(dot_class_name)
+					dots_container.append(dot);
+				};
+
+				$('#prev').click(function() {
+					var prev_index = prev_image_index();
+					var current_image = $(slider_container.find('img.slider-img')[current_image_index]);
+					var prev_image = $(slider_container.find('img.slider-img')[prev_index]);
+
+					var current_dot = $(dots_container.find('div.dot')[current_image_index]);
+					var prev_dot = $(dots_container.find('div.dot')[prev_index]);
+
+					current_image.animate({
+						left : "-=995"
+					}, 1000, function() {// This function gets called at the end of the animation
+						current_image.addClass('slider-off').removeClass('current').attr('style', '');
+						current_dot.removeClass('dot-current');
+					});
+					prev_image.addClass('slider-off');
+					prev_image.animate({
+						left : "0"
+					}, 1000, function() {
+						prev_image.removeClass('slider-off').removeClass('current').attr('stlyle', '');
+						prev_dot.addClass('dot-current');
+					});
+					current_image_index++;
+					if (current_image_index == images.length) {
+						current_image_index = 0;
+					}
+				});
+
+				$('#next').click(function() {
+					var next_index = next_image_index();
+					var current_image = $(slider_container.find('img.slider-img')[current_image_index]);
+					var next_image = $(slider_container.find('img.slider-img')[next_index]);
+
+					var current_dot = $(dots_container.find('div.dot')[current_image_index]);
+					var next_dot = $(dots_container.find('div.dot')[next_index]);
+
+					current_image.animate({
+						left : "995"
+					}, 1000, function() {// This function gets called at the end of the animation
+						current_image.addClass('slider-off').removeClass('current').attr('style', '');
+						current_dot.removeClass('dot-current');
+					});
+					next_image.addClass('slider-back');
+					next_image.animate({
+						left : "0"
+					}, 1000, function() {
+						next_image.removeClass('slider-off').removeClass('slider-back').removeClass('current').attr('stlyle', '');
+						next_dot.addClass('dot-current');
+					});
+					current_image_index--;
+					if (current_image_index == -1) {
+						current_image_index = images.length - 1;
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
