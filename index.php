@@ -1,5 +1,32 @@
 <?php
+require_once("config/constants.php");
+require_once("config/database.php");
 
+global $db_link;
+
+$sql = "SELECT * FROM ".TBL_COLLECTIONS." ORDER BY `id` ASC";
+$query = mysql_query($sql, $db_link) or die(mysql_error());
+
+$collections = array();
+
+while ($row = mysql_fetch_assoc($query)) {
+	$new_coll = array();
+	
+	$new_coll["id"] = $row["id"];
+	$new_coll["title"] = $row["title"];
+	$new_coll["discription"] = $row["discription"];
+}
+
+$p_sql = "SELECT * FROM ". TBL_PICTURES." WHERE `is_cover`='1' AND `collection` ='".$row["id"]."' ORDER BY `id` ASC";
+$p_query = mysql_query($p_sql, $db_link) or die(mysql_error());
+
+$cover_photo = "";
+while ($p_row = mysql_fetch_assoc($p_query)) {
+	$cover_photo = DIR_IMG."/".$row["id"]."/".$p_row["filename"];
+}
+
+$new_coll["cover"] = $cover_photo;
+$collections[] = $new_coll;
 
 include "temp/header.php";
 ?>

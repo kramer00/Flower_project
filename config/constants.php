@@ -7,7 +7,7 @@ define("DB_PASS", "root");
 //end - constants for database connection
 
 //begin - constants for databases and tables
-define("DB_NAME", "flowerhouse");
+define("DB_NAME", "flowerhouse_jquery");
 
 define("TBL_COLLECTIONS", "`collections`");
 define("TBL_PICTURES", "`pictures`");
